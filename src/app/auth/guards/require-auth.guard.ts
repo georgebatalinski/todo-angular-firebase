@@ -1,10 +1,8 @@
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/take';
-
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { take, tap } from 'rxjs/operators';
 
 
 @Injectable()
@@ -13,11 +11,13 @@ export class RequireAuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.auth.authenticated$
-      .take(1)
-      .do(authenticated => {
+      .pipe(
+        take(1),
+        tap(authenticated => {
         if (!authenticated) {
           this.router.navigate(['/']);
         }
-      });
-  }
+        })
+      );
+    }
 }

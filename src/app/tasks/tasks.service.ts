@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../auth';
 import { firebase } from '../firebase';
 import { ITask, Task } from './models';
@@ -19,7 +19,7 @@ export class TasksService {
 
   constructor(afDb: AngularFireDatabase, auth: AuthService) {
     auth.uid$
-      .take(1)
+      .pipe(take(1))
       .subscribe(uid => {
         const path = `/tasks/${uid}`;
 

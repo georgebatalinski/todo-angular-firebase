@@ -1,9 +1,6 @@
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/pluck';
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TasksService } from '../../tasks.service';
 
 
@@ -34,8 +31,8 @@ export class TasksComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.filter = this.route.params
-      .pluck('completed')
-      .do((value: string) => this.tasksService.filterTasks(value));
+    this.filter = this.route.params;
+      //.pluck('completed')
+      //.do((value: string) => this.tasksService.filterTasks(value));
   }
 }
