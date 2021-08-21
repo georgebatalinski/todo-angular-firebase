@@ -1,9 +1,8 @@
-import 'rxjs/add/operator/map';
-
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { firebase } from '../firebase';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -12,8 +11,8 @@ export class AuthService {
   uid$: Observable<string>;
 
   constructor(public afAuth: AngularFireAuth) {
-    this.authenticated$ = afAuth.authState.map(user => !!user);
-    this.uid$ = afAuth.authState.map(user => user.uid);
+    this.authenticated$ = afAuth.authState.pipe(map(user => !!user));
+    this.uid$ = afAuth.authState.pipe(map(user => user.uid));
   }
 
   signIn(provider: firebase.auth.AuthProvider): firebase.Promise<any> {
