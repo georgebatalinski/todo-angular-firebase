@@ -2,7 +2,7 @@
 
 
 # Todo app with Angular, AngularFire2, and Firebase
-A simple Todo app example built with **Angular**, **Angular CLI** and **AngularFire2**. The app features a **Firebase** backend with **OAuth** authentication. Try the demo at <a href="https://ng2-todo-app.firebaseapp.com" target="_blank">ng2-todo-app.firebaseapp.com</a>.
+A simple Todo app example built with **Angular**, **Angular CLI** and **@angular/fire**. The app features a **Firebase** backend with **OAuth** authentication. Try the demo at <a href="https://ng2-todo-app.firebaseapp.com" target="_blank">ng2-todo-app.firebaseapp.com</a>.
 
 
 Stack
@@ -10,7 +10,7 @@ Stack
 
 - Angular 4
 - Angular CLI
-- AngularFire2 `4.0.0-rc.1`
+- @angular/fire `4.0.0-rc.1`
 - Firebase
 - RxJS
 - SASS
