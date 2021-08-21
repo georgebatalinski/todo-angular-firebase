@@ -1,10 +1,8 @@
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/switchMap';
-
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth';
 import { firebase } from '../firebase';
 import { ITask, Task } from './models';
@@ -15,8 +13,8 @@ export class TasksService {
   visibleTasks$: Observable<ITask[]>;
 
   private filter$: ReplaySubject<any> = new ReplaySubject(1);
-  private filteredTasks$: FirebaseListObservable<ITask[]>;
-  private tasks$: FirebaseListObservable<ITask[]>;
+  private filteredTasks$: AngularFireList<ITask[]>;
+  private tasks$: AngularFireList<ITask[]>;
 
 
   constructor(afDb: AngularFireDatabase, auth: AuthService) {
@@ -27,13 +25,12 @@ export class TasksService {
 
         this.tasks$ = afDb.list(path);
 
-        this.filteredTasks$ = afDb.list(path, {query: {
-          orderByChild: 'completed',
-          equalTo: this.filter$
-        }});
+        this.filteredTasks$ = afDb.list(path, ref => 
+          ref.orderByChild('completed').equalTo(this.filter$));
 
-        this.visibleTasks$ = this.filter$
-          .switchMap(filter => filter === null ? this.tasks$ : this.filteredTasks$);
+        this.visibleTasks$ = this.filter$;
+
+          //.pipe(switchMap(filter => filter === null ? this.tasks$.valueChanges() : this.filteredTasks$.valueChanges()));
       });
   }
 
@@ -55,7 +52,7 @@ export class TasksService {
   }
 
   createTask(title: string): firebase.Promise<any> {
-    return this.tasks$.push(new Task(title));
+    return this.tasks$.push([new Task(title)]);
   }
 
   removeTask(task: ITask): firebase.Promise<any> {
