@@ -17,12 +17,12 @@ export class AuthService {
   }
 
   signIn(provider: firebase.auth.AuthProvider): firebase.Promise<any> {
-    return this.afAuth.auth.signInWithPopup(provider)
+    return this.afAuth.signInWithPopup(provider)
       .catch(error => console.log('ERROR @ AuthService#signIn() :', error));
   }
 
   signInAnonymously(): firebase.Promise<any> {
-    return this.afAuth.auth.signInAnonymously()
+    return this.afAuth.signInAnonymously()
       .catch(error => console.log('ERROR @ AuthService#signInAnonymously() :', error));
   }
 
