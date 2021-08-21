@@ -68,7 +68,7 @@
     "sw-precache": "^5.2.0",
     "ts-node": "^3.2.0",
     "tslint": "^5.5.0",
-    "typescript": "^3.2.4"
+    "typescript": "^3.9.10"
   },
   "author": {
     "name": "Richard Park",
